@@ -1,12 +1,15 @@
 /// <reference path="rx.d.ts" />
 console.log("Let's begin!");
 var source = Rx.Observable.create(function (observer) {
-  setTimeout(function () {
+  var id = setTimeout(function () {
     console.log('timeout hit!')
     observer.onNext(42);
     observer.onCompleted();
   }, 1000);
   console.log('started!');
+  return function () {
+    clearTimeout(id);
+  }
 });
 
 var sub = source.subscribe(function (x) {
