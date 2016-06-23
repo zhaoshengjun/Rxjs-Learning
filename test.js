@@ -3,6 +3,7 @@ console.log("Let's begin!");
 var source = Rx.Observable.create(function (observer) {
   var id = setTimeout(function () {
     console.log('timeout hit!')
+    throw 'my bad error';
     observer.onNext(42);
     observer.onCompleted();
   }, 1000);
@@ -20,7 +21,3 @@ var sub = source.subscribe(function (x) {
 }, function () {
   console.log("done!")
 });
-
-setTimeout(function() {
-  sub.dispose();
-}, 500);
