@@ -16,3 +16,7 @@ var sub = source.subscribe(function (x) {
 }, function () {
   console.log("done!")
 });
+
+setTimeout(function() {
+  sub.dispose();
+}, 500);
