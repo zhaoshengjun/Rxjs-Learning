@@ -2,6 +2,7 @@
 console.log("Let's begin!");
 var source = Rx.Observable.create(function (observer) {
   observer.onNext(42);
+  observer.onCompleted();
 });
 
 var sub = source.subscribe(function (x) {
