@@ -2,10 +2,13 @@
 console.log("Let's begin!");
 var source = Rx.Observable.create(function (observer) {
   var id = setTimeout(function () {
-    console.log('timeout hit!')
-    throw 'my bad error';
-    observer.onNext(42);
-    observer.onCompleted();
+    try {
+      throw 'my bad error';
+      observer.onNext(42);
+      observer.onCompleted();
+    } catch (error) {
+      observer.onError(error);
+    }
   }, 1000);
   console.log('started!');
   return function () {
@@ -17,7 +20,7 @@ var source = Rx.Observable.create(function (observer) {
 var sub = source.subscribe(function (x) {
   console.log('Next: ', x);
 }, function (err) {
-  console.error(error);
+  console.error(err);
 }, function () {
   console.log("done!")
 });
